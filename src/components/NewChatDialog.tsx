@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import { Loader2Icon } from 'lucide-react'
+import { PatternFormat } from 'react-number-format'
 import type { Chat, Credentials } from '../api/types'
 import { useCreateChat } from '../hooks/useCreateChat'
+import { normalizePhoneNumber } from '../lib/phone'
 import { Alert, AlertDescription } from './ui/alert'
 import { Button } from './ui/button'
 import {
@@ -27,6 +29,8 @@ interface NewChatDialogProps {
 export function NewChatDialog({ credentials, open, onOpenChange, onCreated }: NewChatDialogProps) {
   const [phoneNumber, setPhoneNumber] = useState('')
   const createChat = useCreateChat(credentials)
+
+  const canSubmit = normalizePhoneNumber(phoneNumber) !== null
 
   const handleOpenChange = (next: boolean) => {
     if (!next) {
@@ -59,10 +63,12 @@ export function NewChatDialog({ credentials, open, onOpenChange, onCreated }: Ne
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="phoneNumber">Номер телефона</Label>
-            <Input
+            <PatternFormat
               id="phoneNumber"
               value={phoneNumber}
-              onChange={(event) => setPhoneNumber(event.target.value)}
+              format="+7 (###) ###-##-##"
+              customInput={Input}
+              onValueChange={(values) => setPhoneNumber(values.value)}
               placeholder="+7 999 123-45-67"
               inputMode="tel"
               autoComplete="off"
@@ -82,7 +88,7 @@ export function NewChatDialog({ credentials, open, onOpenChange, onCreated }: Ne
                 Отмена
               </Button>
             </DialogClose>
-            <Button type="submit" disabled={createChat.isPending}>
+            <Button type="submit" disabled={!canSubmit || createChat.isPending}>
               {createChat.isPending && <Loader2Icon className="animate-spin" />}
               {createChat.isPending ? 'Ищем получателя…' : 'Создать чат'}
             </Button>

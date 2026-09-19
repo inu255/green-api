@@ -8,6 +8,7 @@
 - React 19 + TypeScript
 - Vite
 - `@tanstack/react-query` (queries, mutations, long-polling)
+- `react-number-format` — маска российского номера в диалоге создания чата
 - Tailwind CSS v4 + [shadcn/ui](https://ui.shadcn.com/) (компоненты в `src/components/ui/`)
 - Стилизация в духе [web.max.ru](https://web.max.ru/)
 
@@ -31,7 +32,7 @@ npm run build
 1. Введите `idInstance` и `apiTokenInstance` из
    [личного кабинета GREEN-API](https://console.green-api.com/). Данные проверяются методом
    `getStateInstance` и сохраняются в `localStorage`.
-2. Нажмите «Создать чат» и введите номер телефона получателя (11 цифр для РФ, 12 для РБ) —
+2. Нажмите «Создать чат» и введите номер телефона получателя (маска +7 (999) 123-45-67) —
    номер резолвится в `chatId` методом `checkAccount` и открывается чат.
 3. Напишите текстовое сообщение и отправьте его.
 4. Ответ получателя из MAX появится в чате.
