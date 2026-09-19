@@ -106,3 +106,16 @@ src/
   введён. Модалку можно закрыть (Esc / крестик / клик по фону) — она никого не «запирает».
 - Сообщения, пришедшие до создания чата, не отображаются, но очередь подтверждается,
   чтобы не блокировалась FIFO.
+
+## Деплой на GitHub Pages
+
+Приложение хостится на GitHub Pages: https://inu255.github.io/green-api/
+
+- `base` в `vite.config.ts` условный: в dev — `/` (открывается на http://localhost:5173/), в сборке — `/green-api/`.
+- Публикация выполняется пакетом `gh-pages` в ветку `gh-pages`:
+
+```bash
+npm run deploy
+```
+
+В настройках репозитория: **Settings → Pages → Source: Deploy from a branch → `gh-pages` → `/(root)`**.
